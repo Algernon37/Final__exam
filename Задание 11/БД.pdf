@@ -1,0 +1,17 @@
+-- Создаем новую таблицу "молодые животные"
+CREATE TABLE молодые_животные AS
+SELECT * FROM Животное WHERE id IN (
+    SELECT id FROM Животное
+    WHERE TIMESTAMPDIFF(YEAR, дата_рождения, CURDATE()) BETWEEN 1 AND 3
+);
+
+-- Добавляем столбец "возраст" с точностью до месяца
+ALTER TABLE молодые_животные
+ADD COLUMN возраст VARCHAR(20);
+
+-- Обновляем данные в новой таблице с учетом возраста
+UPDATE молодые_животные
+SET возраст = CONCAT(
+    TIMESTAMPDIFF(YEAR, дата_рождения, CURDATE()), ' лет ',
+    TIMESTAMPDIFF(MONTH, дата_рождения, CURDATE()) % 12, ' месяцев'
+);

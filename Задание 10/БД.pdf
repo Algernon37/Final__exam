@@ -1,0 +1,13 @@
+DELETE FROM Верблюд;
+
+-- Создаем новую таблицу Лошади_и_Ослы
+CREATE TABLE Лошади_и_Ослы AS
+SELECT id, выносливость AS параметр, NULL AS характеристика
+FROM Лошадь
+UNION ALL
+SELECT id, NULL, упряжь
+FROM Осел;
+
+-- Удаляем таблицы Лошадь и Осел, если они больше не нужны
+DROP TABLE Лошадь;
+DROP TABLE Осел;

@@ -1,0 +1,38 @@
+CREATE TABLE Все_животные AS (
+    SELECT id, имя, дата_рождения, NULL AS порода, NULL AS цвет, NULL AS размер, NULL AS выносливость, NULL AS горбы, NULL AS упряжь, 'Животное' AS прошлая_принадлежность
+    FROM Животное
+    
+    UNION ALL
+    
+    SELECT id, NULL AS имя, NULL, порода, NULL, NULL, NULL, NULL, NULL, 'Собака' AS прошлая_принадлежность
+    FROM Собака
+    
+    UNION ALL
+    
+    SELECT id, NULL AS имя, NULL, NULL, цвет, NULL, NULL, NULL, NULL, 'Кошка' AS прошлая_принадлежность
+    FROM Кошка
+    
+    UNION ALL
+    
+    SELECT id, NULL AS имя, NULL, NULL, NULL, размер, NULL, NULL, NULL, 'Хомяк' AS прошлая_принадлежность
+    FROM Хомяк
+    
+    UNION ALL
+    
+    SELECT id, NULL AS имя, NULL, NULL, NULL, NULL, NULL, горбы, NULL, 'Верблюд' AS прошлая_принадлежность
+    FROM Верблюд
+);
+
+-- Обновляем столбец "прошлая_принадлежность"
+UPDATE Все_животные
+SET прошлая_принадлежность = 
+    CASE
+        WHEN порода IS NOT NULL THEN 'Собака'
+        WHEN цвет IS NOT NULL THEN 'Кошка'
+        WHEN размер IS NOT NULL THEN 'Хомяк'
+        WHEN выносливость IS NOT NULL THEN 'Лошадь'
+        WHEN горбы IS NOT NULL THEN 'Верблюд'
+        WHEN упряжь IS NOT NULL THEN 'Осел'
+        ELSE 'Животное'
+    END;
+
